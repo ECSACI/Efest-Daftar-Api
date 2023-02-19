@@ -1,15 +1,14 @@
 import mongoose from "mongoose";
 
-export interface AbsenRPL extends mongoose.Document {
+export interface EfestDaftar extends mongoose.Document {
    nama: string,
    kelas: string,
    kelasStr: string,
-   status: string,
-   alasan: string,
+   jenis: string,
    time: Date,
 }
 
-export const model = mongoose.model<AbsenRPL>("AbsenRPL", new mongoose.Schema({
+export const model = mongoose.model<EfestDaftar>("EfestDaftar", new mongoose.Schema({
   nama: {
     type: String,
     required: false,
@@ -22,11 +21,7 @@ export const model = mongoose.model<AbsenRPL>("AbsenRPL", new mongoose.Schema({
     type: String,
     required: true,
   },
-  status: {
-    type: String,
-    required: true,
-  },
-  alasan: {
+  jenis: {
     type: String,
     required: true,
   },

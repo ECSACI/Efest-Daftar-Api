@@ -1,15 +1,16 @@
 import * as Express from "express";
 import * as csv from "fast-csv";
 const router = Express.Router();
-import {model} from "../db/model/absen.js";
+import {model} from "../db/model/daftar.js";
 
 router.post("/absen", async function(req, res) {
   try {
     console.log(req.body);
-    const {nama, kelas, status, kelasStr, alasan} = req.body;
-    const absenModel = new model({nama, kelas, status, alasan: (alasan|| ""), kelasStr, time: Date.now()});
+    const {nama, kelas, jenis, kelasStr} = req.body;
+    if (!nama || !kelas || !kelasStr || !jenis) throw new Error("Invalid Input");
+    const absenModel = new model({nama, kelas, jenis, kelasStr, time: Date.now()});
     await absenModel.save();
-    res.json({status: 200, message: `Success ${nama}, ${kelas}${kelasStr.toUpperCase()}`});
+    res.json({status: 200, message: `Success ${nama}, ${kelas}${kelasStr.toUpperCase()}, Daftar ${jenis}`});
   } catch (err) {
     res.json({status: 401, message: (err as Error).message});
   }
@@ -58,7 +59,7 @@ router.get("/export", async function(req, res) {
   model.find({}).lean().exec((err, absenRPLs) => {
     if (err) throw err;
     res.setHeader("Content-Type", "text/csv");
-    res.setHeader("Content-Disposition", "attachment; filename="+"AbsenRPL.csv");
+    res.setHeader("Content-Disposition", "attachment; filename="+"Daftar.csv");
     csv.write(absenRPLs, {headers: true}).pipe(res);
   });
 });

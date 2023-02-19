@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-export const model = mongoose.model("AbsenRPL", new mongoose.Schema({
+export const model = mongoose.model("EfestDaftar", new mongoose.Schema({
     nama: {
         type: String,
         required: false,
@@ -12,11 +12,7 @@ export const model = mongoose.model("AbsenRPL", new mongoose.Schema({
         type: String,
         required: true,
     },
-    status: {
-        type: String,
-        required: true,
-    },
-    alasan: {
+    jenis: {
         type: String,
         required: true,
     },
