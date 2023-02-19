@@ -1,5 +1,6 @@
 import * as Express from "express";
 import * as csv from "fast-csv";
+import "dotenv/config";
 const router = Express.Router();
 import {model} from "../db/model/daftar.js";
 
@@ -24,6 +25,24 @@ router.get("/showabsen", async function(req:Express.Request, res:Express.Respons
   } catch (err) {
     res.json({status: 401, message: (err as Error).message});
   }
+});
+
+router.post("/grup", async function(req:Express.Request, res:Express.Response) {
+  let name = req.body.grup;
+  if (name === "speech") {
+    name = process.env.Speech;
+  } else if (name === "singing") {
+    name = process.env.Singing;
+  } else if (name === "poetry") {
+    name = process.env.Poetry;
+  } else if (name === "story telling") {
+    name = process.env.StoryTell;
+  } else if (name === "news anchor") {
+    name = process.env.NewsAnchor;
+  } else {
+    return res.json({status: 400, message: "Invalid Group"});
+  }
+  return res.json({status: 200, message: name});
 });
 
 router.get("/ping", async function(req:Express.Request, res:Express.Response) {
